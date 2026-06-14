@@ -22,6 +22,19 @@ The key lesson is that generated code or controller decisions should not be
 trusted directly. Tests, reference behavior, fuzzing, and performance gates
 decide what is accepted.
 
+## Stage 2: Hardware Characterization
+
+This stage adds hardware characterization:
+
+- `HardwareSpec` is a machine-readable hardware description.
+- `characterize_device` is runtime probing that checks observed device behavior.
+- `fuzzer` is structured ISA fuzzing with valid random programs.
+- `hw_spec.json` is the observed hardware schema that later codegen stages can
+  consume.
+
+The lesson is still the same: the simulator may advertise capabilities, but
+small probes and fuzz tests decide what is trusted.
+
 ## Install
 
 ```bash
@@ -42,5 +55,8 @@ pytest
 | ISA | target instruction set contract |
 | Memory model | device memory and access rules |
 | Cycle counter | simplified performance model |
+| HardwareSpec | machine-readable observed hardware schema |
+| Characterization probe | runtime hardware discovery |
+| Fuzzer | structured ISA stress testing |
 
 The cycle counter is a teaching model, not cycle-accurate simulation.

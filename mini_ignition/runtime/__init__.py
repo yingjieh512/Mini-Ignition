@@ -21,11 +21,19 @@ from mini_ignition.runtime.runner import (
     run_matmul,
     write_matrix_to_memory,
 )
+from mini_ignition.runtime.controller import (
+    ControllerResult,
+    StrategyReport,
+    run_controller,
+)
 
 __all__ = [
+    "ControllerResult",
     "RunResult",
     "RuntimeInputError",
+    "StrategyReport",
     "read_matrix_from_memory",
+    "run_controller",
     "run_matmul",
     "write_matrix_to_memory",
 ]

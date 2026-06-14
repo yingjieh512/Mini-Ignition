@@ -1,0 +1,43 @@
+{
+  "alignment": 4,
+  "has_dot": true,
+  "has_vector_ops": true,
+  "latencies": {
+    "ADD": 1,
+    "DOT": 3,
+    "HALT": 1,
+    "LOAD": 3,
+    "MOV": 1,
+    "MUL": 1,
+    "STORE": 3,
+    "VADD": 1,
+    "VLOAD": 4,
+    "VMUL": 1,
+    "VSTORE": 4
+  },
+  "memory_size": 4096,
+  "name": "toy-accelerator-v0",
+  "notes": [
+    "Scalar MOV/LOAD/STORE/ADD/MUL/HALT probes passed.",
+    "Vector VLOAD/VSTORE/VADD/VMUL probes passed.",
+    "DOT probe passed.",
+    "Misaligned accesses are rejected for alignment 4.",
+    "Latencies are positive fixed instruction costs for a toy performance model."
+  ],
+  "num_scalar_registers": 16,
+  "num_vector_registers": 16,
+  "supported_opcodes": [
+    "MOV",
+    "LOAD",
+    "STORE",
+    "ADD",
+    "MUL",
+    "HALT",
+    "VLOAD",
+    "VSTORE",
+    "VADD",
+    "VMUL",
+    "DOT"
+  ],
+  "vector_width": 8
+}

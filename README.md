@@ -52,6 +52,21 @@ matmul into target-specific instructions. Real systems also handle register
 allocation, scheduling, memory layout, tiling, and instruction selection. This
 stage implements a tiny educational version of that idea.
 
+## Stage 4: Runtime Runner + Correctness Evaluation
+
+This stage adds a simplified accelerator runtime:
+
+- The runtime runner handles memory loading, generated program execution,
+  output retrieval, and correctness checking.
+- NumPy is used as the trusted reference implementation.
+- `RunResult` reports pass/fail status, maximum absolute error, cycles,
+  instruction count, arithmetic operation count, and achieved ops per cycle.
+
+Real accelerator runtimes manage device memory, command submission,
+synchronization, and result readback. Code generation is not useful by itself:
+a generated kernel must be executed, validated against a reference, and
+measured. This runtime layer connects generated code to actual device behavior.
+
 ## Install
 
 ```bash
@@ -77,5 +92,7 @@ pytest
 | Fuzzer | structured ISA stress testing |
 | Matmul codegen | tiny compiler backend or kernel generator |
 | Codegen strategy | target-specific lowering choice |
+| Runtime runner | simplified accelerator runtime |
+| NumPy comparison | trusted correctness reference |
 
 The cycle counter is a teaching model, not cycle-accurate simulation.

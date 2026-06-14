@@ -67,6 +67,23 @@ synchronization, and result readback. Code generation is not useful by itself:
 a generated kernel must be executed, validated against a reference, and
 measured. This runtime layer connects generated code to actual device behavior.
 
+## Stage 5: Metrics + Test Ladder
+
+This stage adds performance metrics and a staged verification ladder:
+
+- `metrics.py` is a toy performance model built from `HardwareSpec` and runtime
+  counters.
+- The performance gate rejects kernels that are correct but too slow for the
+  toy utilization threshold.
+- `ladder.py` is a staged verification harness.
+- Each layer must pass before higher layers depend on it: scalar instructions,
+  memory, vector instructions, `DOT`, matmul correctness, randomized matmul,
+  then performance.
+
+A generated kernel being correct is not enough. In accelerator bring-up,
+correctness gates come first, then performance gates decide whether the
+implementation is useful.
+
 ## Install
 
 ```bash
@@ -94,5 +111,8 @@ pytest
 | Codegen strategy | target-specific lowering choice |
 | Runtime runner | simplified accelerator runtime |
 | NumPy comparison | trusted correctness reference |
+| Metrics | toy performance model |
+| Test ladder | staged verification harness |
+| Performance gate | useful-kernel threshold |
 
 The cycle counter is a teaching model, not cycle-accurate simulation.

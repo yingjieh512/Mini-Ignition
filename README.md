@@ -35,6 +35,23 @@ This stage adds hardware characterization:
 The lesson is still the same: the simulator may advertise capabilities, but
 small probes and fuzz tests decide what is trusted.
 
+## Stage 3: Matmul Codegen
+
+This stage adds a tiny matmul compiler backend:
+
+- Matmul codegen lowers `C = A @ B` into target toy ISA instructions.
+- `scalar_naive` is a portable but slow scalar baseline.
+- `vector_dot` uses target vector and `DOT` instructions.
+- `tiled_vector_dot` is a simplified version of tiling over the `K` dimension.
+- `HardwareSpec` guides codegen decisions such as vector width, alignment, and
+  available opcodes.
+- NumPy is the reference implementation used by tests.
+
+In real accelerator enablement, codegen lowers high-level operations such as
+matmul into target-specific instructions. Real systems also handle register
+allocation, scheduling, memory layout, tiling, and instruction selection. This
+stage implements a tiny educational version of that idea.
+
 ## Install
 
 ```bash
@@ -58,5 +75,7 @@ pytest
 | HardwareSpec | machine-readable observed hardware schema |
 | Characterization probe | runtime hardware discovery |
 | Fuzzer | structured ISA stress testing |
+| Matmul codegen | tiny compiler backend or kernel generator |
+| Codegen strategy | target-specific lowering choice |
 
 The cycle counter is a teaching model, not cycle-accurate simulation.
